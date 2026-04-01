@@ -1,0 +1,48 @@
+services:
+
+  # ── Spring Boot backend ──────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./realtime-playback-sync-service-back-end
+      dockerfile: Dockerfile
+    container_name: music-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      # Uploaded audio + HLS segments — must survive container restarts
+      - music-storage:/app/storage
+      # H2 file database — persists all songs, rooms, users, history, playlists
+      - music-data:/app/data
+      # Application logs
+      - music-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      # Calls the /music/status endpoint; curl is installed in the Dockerfile
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/music/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      # Spring Boot + FFmpeg startup can take up to ~90 s on first run
+      start_period: 90s
+
+  # ── React frontend (nginx) ───────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./realtime-playback-sync-service-front-end
+      dockerfile: Dockerfile
+    container_name: music-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+# ── Named volumes ────────────────────────────────────────────────────────────
+volumes:
+  music-storage:
+    driver: local
+  music-data:
+    driver: local
+  music-logs:
+    driver: local

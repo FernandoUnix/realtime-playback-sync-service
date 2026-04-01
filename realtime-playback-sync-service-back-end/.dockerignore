@@ -1,0 +1,23 @@
+# Build output — rebuilt inside Docker
+target/
+
+# Windows FFmpeg binary — Linux ffmpeg is installed via apt in the Dockerfile
+ffmpeg/
+
+# Runtime data — these are mounted as Docker volumes, not baked into the image
+storage/
+data/
+logs/
+
+# Version control
+.git/
+.gitignore
+
+# IDE and OS artifacts
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Docs / local notes
+*.md

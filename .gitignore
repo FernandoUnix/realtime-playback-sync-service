@@ -1,0 +1,31 @@
+# ── Logs ──────────────────────────────────────────────────────────────────────
+.logs/
+*.log
+
+# ── Root-level package-lock (no package.json here) ────────────────────────────
+/package-lock.json
+
+# ── Java / Maven (back-end) ───────────────────────────────────────────────────
+realtime-playback-sync-service-back-end/target/
+realtime-playback-sync-service-back-end/data/
+realtime-playback-sync-service-back-end/logs/
+realtime-playback-sync-service-back-end/storage/
+*.class
+*.jar
+*.war
+
+# ── Node / React (front-end) ──────────────────────────────────────────────────
+realtime-playback-sync-service-front-end/node_modules/
+realtime-playback-sync-service-front-end/build/
+realtime-playback-sync-service-front-end/package-lock.json
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.suo
+*.user
