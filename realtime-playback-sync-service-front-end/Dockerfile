@@ -7,6 +7,7 @@ COPY package*.json ./
 RUN npm install --silent
 
 # Copy source and build
+COPY postcss.config.js tailwind.config.js ./
 COPY public ./public
 COPY src ./src
 # CI=false prevents CRA from treating ESLint warnings as errors during build
